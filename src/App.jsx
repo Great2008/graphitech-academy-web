@@ -1,6 +1,34 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { api } from './lib/api'
+import { AuthProvider, useAuth } from './lib/AuthContext'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import CourseList from './pages/CourseList'
+import CourseDetail from './pages/CourseDetail'
+
+function Nav() {
+  const { isAuthenticated, user, logout } = useAuth()
+  return (
+    <div className="flex justify-between items-center px-6 py-4 max-w-md mx-auto">
+      <Link to="/" className="text-sm font-bold text-brand-violet">
+        GraphiTech Academy
+      </Link>
+      {isAuthenticated ? (
+        <div className="flex items-center gap-3 text-sm">
+          <span className="text-slate-500">Hi, {user.display_name || user.username}</span>
+          <button onClick={logout} className="text-brand-purple font-semibold">
+            Log out
+          </button>
+        </div>
+      ) : (
+        <Link to="/login" className="text-sm text-brand-purple font-semibold">
+          Log in
+        </Link>
+      )}
+    </div>
+  )
+}
 
 function Home() {
   const [apiStatus, setApiStatus] = useState('checking...')
@@ -33,17 +61,7 @@ function Home() {
       >
         Browse Courses
       </Link>
-      <p className="text-xs text-slate-400 mt-10">
-        Backend status: {apiStatus}
-      </p>
-    </div>
-  )
-}
-
-function Courses() {
-  return (
-    <div className="min-h-screen flex items-center justify-center px-6 text-center">
-      <p className="text-slate-500">Course list coming next.</p>
+      <p className="text-xs text-slate-400 mt-10">Backend status: {apiStatus}</p>
     </div>
   )
 }
@@ -51,10 +69,16 @@ function Courses() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses />} />
-      </Routes>
+      <AuthProvider>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/courses" element={<CourseList />} />
+          <Route path="/courses/:slug" element={<CourseDetail />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
