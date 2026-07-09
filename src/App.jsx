@@ -6,18 +6,33 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
 import CourseDetail from './pages/CourseDetail'
+import Tutor from './pages/Tutor'
+import AdminCourses from './pages/admin/AdminCourses'
+import AdminCourseDetail from './pages/admin/AdminCourseDetail'
+import AdminAIDraft from './pages/admin/AdminAIDraft'
+
+const STAFF_ROLES = ['instructor', 'admin', 'super_admin']
 
 function Nav() {
   const { isAuthenticated, user, logout } = useAuth()
+  const isStaff = isAuthenticated && STAFF_ROLES.includes(user.role)
+
   return (
-    <div className="flex justify-between items-center px-6 py-4 max-w-md mx-auto">
+    <div className="flex justify-between items-center px-6 py-4 max-w-md mx-auto flex-wrap gap-2">
       <Link to="/" className="text-sm font-bold text-brand-violet">
         GraphiTech Academy
       </Link>
       {isAuthenticated ? (
         <div className="flex items-center gap-3 text-sm">
-          <span className="text-slate-500">Hi, {user.display_name || user.username}</span>
-          <button onClick={logout} className="text-brand-purple font-semibold">
+          <Link to="/tutor" className="text-brand-purple font-semibold">
+            AI Tutor
+          </Link>
+          {isStaff && (
+            <Link to="/admin/courses" className="text-brand-purple font-semibold">
+              Admin
+            </Link>
+          )}
+          <button onClick={logout} className="text-slate-500">
             Log out
           </button>
         </div>
@@ -77,6 +92,10 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
+          <Route path="/tutor" element={<Tutor />} />
+          <Route path="/admin/courses" element={<AdminCourses />} />
+          <Route path="/admin/courses/:id" element={<AdminCourseDetail />} />
+          <Route path="/admin/ai-draft" element={<AdminAIDraft />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
