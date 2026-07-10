@@ -8,6 +8,9 @@ import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
 import CourseDetail from './pages/CourseDetail'
 import Tutor from './pages/Tutor'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminStudents from './pages/admin/AdminStudents'
+import AdminStudentDetail from './pages/admin/AdminStudentDetail'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminCourseDetail from './pages/admin/AdminCourseDetail'
 import AdminAIDraft from './pages/admin/AdminAIDraft'
@@ -30,7 +33,7 @@ function Nav() {
               tutor
             </Link>
             {isStaff && (
-              <Link to="/admin/courses" className="text-brand-sky hover:text-brand-sky/80">
+              <Link to="/admin" className="text-brand-sky hover:text-brand-sky/80">
                 admin
               </Link>
             )}
@@ -110,6 +113,9 @@ export default function App() {
           <Route path="/courses" element={<CourseList />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route path="/tutor" element={<Tutor />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/students" element={<AdminStudents />} />
+          <Route path="/admin/students/:id" element={<AdminStudentDetail />} />
           <Route path="/admin/courses" element={<AdminCourses />} />
           <Route path="/admin/courses/:id" element={<AdminCourseDetail />} />
           <Route path="/admin/ai-draft" element={<AdminAIDraft />} />
