@@ -6,7 +6,7 @@ import { useAuth } from '../lib/AuthContext'
 export default function Tutor() {
   const { isAuthenticated } = useAuth()
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hi! I'm your GraphiTech Academy AI tutor. Ask me anything about your course." },
+    { role: 'assistant', content: "Hi — I'm your AI tutor. Ask me anything about your course." },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -49,16 +49,17 @@ export default function Tutor() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6 text-center">
-        <p className="text-slate-500">Log in to chat with the AI tutor.</p>
+      <div className="min-h-[calc(100vh-73px)] flex items-center justify-center px-6 text-center">
+        <p className="text-white/40 font-mono text-sm">log in to chat with the AI tutor.</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-indigo-50 to-sky-50 flex flex-col">
+    <div className="min-h-[calc(100vh-73px)] flex flex-col">
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col px-4 pb-4">
-        <h1 className="text-xl font-extrabold text-brand-violet text-center py-4">
+        <p className="font-mono text-xs text-brand-amber text-center pt-4">$ ./ai-tutor</p>
+        <h1 className="font-display font-bold text-lg text-white text-center py-2 mb-2">
           AI Tutor
         </h1>
 
@@ -69,15 +70,15 @@ export default function Tutor() {
                 className={`inline-block max-w-[85%] rounded-2xl px-4 py-3 text-sm text-left ${
                   m.role === 'user'
                     ? 'bg-brand-purple text-white'
-                    : 'bg-white text-slate-700 shadow-sm'
+                    : 'bg-surface text-white/80 border border-white/5'
                 }`}
               >
                 {m.lowConfidence && (
-                  <p className="text-xs text-amber-600 mb-1 font-semibold">
-                    ⚠ Not fully confident about this one
+                  <p className="text-xs text-brand-amber mb-1 font-mono">
+                    ⚠ not fully confident about this one
                   </p>
                 )}
-                <div className="prose prose-sm max-w-none">
+                <div className="prose prose-invert prose-sm max-w-none prose-a:text-brand-sky">
                   <ReactMarkdown>{m.content}</ReactMarkdown>
                 </div>
                 {m.nudge && (
@@ -86,24 +87,27 @@ export default function Tutor() {
               </div>
             </div>
           ))}
-          {loading && <p className="text-sm text-slate-400">Thinking…</p>}
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {loading && <p className="text-sm text-white/30 font-mono">thinking…</p>}
+          {error && <p className="text-sm text-brand-red font-mono">{error}</p>}
           <div ref={bottomRef} />
         </div>
 
         {remaining !== null && (
-          <p className="text-xs text-slate-400 text-center mb-2">
+          <p className="text-xs text-white/30 font-mono text-center mb-2">
             {remaining} free questions left today
           </p>
         )}
 
         <form onSubmit={sendMessage} className="flex gap-2">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question…"
-            className="flex-1 rounded-full border border-slate-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple"
-          />
+          <div className="flex-1 flex items-center bg-surface border border-white/10 rounded-full px-4 focus-within:ring-2 focus-within:ring-brand-purple">
+            <span className="font-mono text-brand-green text-sm mr-2">&gt;</span>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask a question…"
+              className="flex-1 bg-transparent py-3 text-sm text-white placeholder-white/30 focus:outline-none"
+            />
+          </div>
           <button
             type="submit"
             disabled={loading}

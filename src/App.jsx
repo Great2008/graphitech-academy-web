@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { api } from './lib/api'
 import { AuthProvider, useAuth } from './lib/AuthContext'
+import { EditorWindow } from './components/EditorWindow'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
@@ -18,35 +19,37 @@ function Nav() {
   const isStaff = isAuthenticated && STAFF_ROLES.includes(user.role)
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 max-w-md mx-auto flex-wrap gap-2">
-      <Link to="/" className="text-sm font-bold text-brand-violet">
-        GraphiTech Academy
-      </Link>
-      {isAuthenticated ? (
-        <div className="flex items-center gap-3 text-sm">
-          <Link to="/tutor" className="text-brand-purple font-semibold">
-            AI Tutor
-          </Link>
-          {isStaff && (
-            <Link to="/admin/courses" className="text-brand-purple font-semibold">
-              Admin
-            </Link>
-          )}
-          <button onClick={logout} className="text-slate-500">
-            Log out
-          </button>
-        </div>
-      ) : (
-        <Link to="/login" className="text-sm text-brand-purple font-semibold">
-          Log in
+    <nav className="border-b border-white/5 bg-ink/95 backdrop-blur sticky top-0 z-10">
+      <div className="flex justify-between items-center px-6 py-4 max-w-2xl mx-auto flex-wrap gap-3">
+        <Link to="/" className="font-display text-sm font-bold text-white tracking-tight">
+          GraphiTech<span className="text-brand-purple">Academy</span>
         </Link>
-      )}
-    </div>
+        {isAuthenticated ? (
+          <div className="flex items-center gap-4 text-sm font-mono">
+            <Link to="/tutor" className="text-brand-amber hover:text-brand-amber/80">
+              tutor
+            </Link>
+            {isStaff && (
+              <Link to="/admin/courses" className="text-brand-sky hover:text-brand-sky/80">
+                admin
+              </Link>
+            )}
+            <button onClick={logout} className="text-white/40 hover:text-white/70">
+              logout
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="text-sm font-mono text-brand-sky hover:text-brand-sky/80">
+            login
+          </Link>
+        )}
+      </div>
+    </nav>
   )
 }
 
 function Home() {
-  const [apiStatus, setApiStatus] = useState('checking...')
+  const [apiStatus, setApiStatus] = useState('checking')
 
   useEffect(() => {
     api
@@ -55,28 +58,42 @@ function Home() {
       .catch(() => setApiStatus('offline'))
   }, [])
 
+  const statusColor =
+    apiStatus === 'online' ? 'text-brand-green' : apiStatus === 'offline' ? 'text-brand-red' : 'text-white/40'
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-indigo-50 to-sky-50 flex flex-col items-center justify-center px-6 text-center">
-      <p className="text-xs tracking-[0.3em] text-brand-purple font-bold uppercase mb-2">
-        GraphiTech Academy
-      </p>
-      <p className="text-xs text-slate-500 tracking-widest mb-8">
-        Learn &middot; Build &middot; Earn &middot; Give Back
-      </p>
-      <h1 className="text-3xl font-extrabold text-brand-violet mb-4">
-        Free coding courses. Real certificates.
-      </h1>
-      <p className="text-slate-600 max-w-md mb-8">
-        Learn web development, Python, and AI productivity — free. Pay only
-        when you earn a certificate.
-      </p>
-      <Link
-        to="/courses"
-        className="bg-brand-purple text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition"
-      >
-        Browse Courses
-      </Link>
-      <p className="text-xs text-slate-400 mt-10">Backend status: {apiStatus}</p>
+    <div className="min-h-[calc(100vh-73px)] flex items-center justify-center px-6 py-12">
+      <EditorWindow label="academy.sh" className="w-full max-w-md">
+        <p className="font-mono text-xs text-brand-green mb-6">
+          $ whoami
+        </p>
+        <h1 className="font-display font-extrabold text-3xl leading-tight text-white mb-4">
+          Free coding courses.
+          <br />
+          <span className="text-brand-purple">Certificates that verify.</span>
+        </h1>
+        <p className="text-white/60 mb-8 leading-relaxed">
+          Learn web development, Python, and AI productivity — free. Pay
+          only when you've earned a certificate.
+        </p>
+        <div className="flex flex-col gap-3">
+          <Link
+            to="/courses"
+            className="text-center bg-brand-purple text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-brand-purple/20 hover:opacity-90 transition"
+          >
+            Browse Courses
+          </Link>
+          <Link
+            to="/tutor"
+            className="text-center border border-white/10 text-white/80 px-6 py-3 rounded-full font-semibold hover:bg-white/5 transition"
+          >
+            Try the AI Tutor
+          </Link>
+        </div>
+        <p className={`font-mono text-xs mt-8 ${statusColor}`}>
+          &gt; backend: {apiStatus}
+        </p>
+      </EditorWindow>
     </div>
   )
 }
