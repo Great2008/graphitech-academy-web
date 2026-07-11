@@ -11,6 +11,7 @@ import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
 import CourseDetail from './pages/CourseDetail'
 import Tutor from './pages/Tutor'
+import Playground from './pages/Playground'
 import NotFound from './pages/NotFound'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminStudents from './pages/admin/AdminStudents'
@@ -98,6 +99,7 @@ function AppShell() {
           <Route path="/courses" element={<CourseList />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route path="/tutor" element={<Tutor />} />
+          <Route path="/playground" element={<Playground />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/students" element={<AdminStudents />} />
           <Route path="/admin/students/:id" element={<AdminStudentDetail />} />

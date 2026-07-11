@@ -55,6 +55,9 @@ export function MenuOverlay({ isOpen, onClose }) {
             <MenuLink to="/tutor" onClick={onClose} accent="text-brand-amber">
               📁 tutor.ai
             </MenuLink>
+            <MenuLink to="/playground" onClick={onClose} accent="text-brand-green">
+              📁 playground/
+            </MenuLink>
           </div>
 
           {isStaff && (
