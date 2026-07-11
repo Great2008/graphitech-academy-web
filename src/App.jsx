@@ -11,6 +11,7 @@ import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
 import CourseDetail from './pages/CourseDetail'
 import Tutor from './pages/Tutor'
+import NotFound from './pages/NotFound'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminStudents from './pages/admin/AdminStudents'
 import AdminStudentDetail from './pages/admin/AdminStudentDetail'
@@ -103,6 +104,7 @@ function AppShell() {
           <Route path="/admin/courses" element={<AdminCourses />} />
           <Route path="/admin/courses/:id" element={<AdminCourseDetail />} />
           <Route path="/admin/ai-draft" element={<AdminAIDraft />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <DragHintBanner onOpen={openMenu} />
