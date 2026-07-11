@@ -1,8 +1,11 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { api } from './lib/api'
-import { AuthProvider, useAuth } from './lib/AuthContext'
+import { AuthProvider } from './lib/AuthContext'
 import { EditorWindow } from './components/EditorWindow'
+import { MenuOverlay } from './components/MenuOverlay'
+import { DragHintBanner } from './components/DragHintBanner'
+import { useDragDownToOpen } from './hooks/useDragDownToOpen'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import CourseList from './pages/CourseList'
@@ -15,37 +18,13 @@ import AdminCourses from './pages/admin/AdminCourses'
 import AdminCourseDetail from './pages/admin/AdminCourseDetail'
 import AdminAIDraft from './pages/admin/AdminAIDraft'
 
-const STAFF_ROLES = ['instructor', 'admin', 'super_admin']
-
-function Nav() {
-  const { isAuthenticated, user, logout } = useAuth()
-  const isStaff = isAuthenticated && STAFF_ROLES.includes(user.role)
-
+function TopBar() {
   return (
     <nav className="border-b border-white/5 bg-ink/95 backdrop-blur sticky top-0 z-10">
-      <div className="flex justify-between items-center px-6 py-4 max-w-2xl mx-auto flex-wrap gap-3">
+      <div className="px-6 py-4 max-w-2xl mx-auto">
         <Link to="/" className="font-display text-sm font-bold text-white tracking-tight">
           GraphiTech<span className="text-brand-purple">Academy</span>
         </Link>
-        {isAuthenticated ? (
-          <div className="flex items-center gap-4 text-sm font-mono">
-            <Link to="/tutor" className="text-brand-amber hover:text-brand-amber/80">
-              tutor
-            </Link>
-            {isStaff && (
-              <Link to="/admin" className="text-brand-sky hover:text-brand-sky/80">
-                admin
-              </Link>
-            )}
-            <button onClick={logout} className="text-white/40 hover:text-white/70">
-              logout
-            </button>
-          </div>
-        ) : (
-          <Link to="/login" className="text-sm font-mono text-brand-sky hover:text-brand-sky/80">
-            login
-          </Link>
-        )}
       </div>
     </nav>
   )
@@ -65,11 +44,9 @@ function Home() {
     apiStatus === 'online' ? 'text-brand-green' : apiStatus === 'offline' ? 'text-brand-red' : 'text-white/40'
 
   return (
-    <div className="min-h-[calc(100vh-73px)] flex items-center justify-center px-6 py-12">
+    <div className="min-h-[calc(100vh-73px-42px)] flex items-center justify-center px-6 py-12">
       <EditorWindow label="academy.sh" className="w-full max-w-md">
-        <p className="font-mono text-xs text-brand-green mb-6">
-          $ whoami
-        </p>
+        <p className="font-mono text-xs text-brand-green mb-6">$ whoami</p>
         <h1 className="font-display font-extrabold text-3xl leading-tight text-white mb-4">
           Free coding courses.
           <br />
@@ -101,11 +78,18 @@ function Home() {
   )
 }
 
-export default function App() {
+function AppShell() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const openMenu = useCallback(() => setMenuOpen(true), [])
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
+
+  useDragDownToOpen(openMenu, !menuOpen)
+
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Nav />
+    <>
+      <TopBar />
+      <MenuOverlay isOpen={menuOpen} onClose={closeMenu} />
+      <div className="pb-12">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -120,6 +104,17 @@ export default function App() {
           <Route path="/admin/courses/:id" element={<AdminCourseDetail />} />
           <Route path="/admin/ai-draft" element={<AdminAIDraft />} />
         </Routes>
+      </div>
+      <DragHintBanner onOpen={openMenu} />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppShell />
       </AuthProvider>
     </BrowserRouter>
   )
