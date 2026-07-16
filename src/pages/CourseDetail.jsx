@@ -23,6 +23,7 @@ export default function CourseDetail() {
   const [course, setCourse] = useState(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [enrolled, setEnrolled] = useState(false)
+  const [isEligible, setIsEligible] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [actionMsg, setActionMsg] = useState('')
@@ -35,17 +36,41 @@ export default function CourseDetail() {
       .finally(() => setLoading(false))
   }, [slug])
 
+  useEffect(() => {
+    if (!course || !isAuthenticated) return
+    api
+      .get(`/api/courses/${course.id}/enrollment`)
+      .then((enrollment) => {
+        setEnrolled(true)
+        setIsEligible(enrollment.is_eligible_for_certificate)
+      })
+      .catch(() => {
+        // 404 just means not enrolled yet — expected, not an error to show.
+        setEnrolled(false)
+      })
+  }, [course, isAuthenticated])
+
   async function handleEnroll() {
     if (!isAuthenticated) {
       setActionMsg('Log in first to enroll.')
       return
     }
     try {
-      await api.post(`/api/courses/${course.id}/enroll`)
+      const enrollment = await api.post(`/api/courses/${course.id}/enroll`)
       setEnrolled(true)
+      setIsEligible(enrollment.is_eligible_for_certificate)
       setActionMsg('Enrolled. Start with lesson one below.')
     } catch (err) {
       setActionMsg(err.message)
+    }
+  }
+
+  async function refreshEnrollment() {
+    try {
+      const enrollment = await api.get(`/api/courses/${course.id}/enrollment`)
+      setIsEligible(enrollment.is_eligible_for_certificate)
+    } catch {
+      // not enrolled — nothing to refresh
     }
   }
 
@@ -60,6 +85,7 @@ export default function CourseDetail() {
         is_completed: true,
       })
       setActionMsg('Marked complete.')
+      refreshEnrollment()
     } catch (err) {
       setActionMsg(err.message)
     }
@@ -103,12 +129,18 @@ export default function CourseDetail() {
                 Submit Capstone
               </Link>
             )}
-            <button
-              onClick={claimCertificate}
-              className="flex-1 text-center bg-brand-green/10 text-brand-green px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-green/20 transition"
-            >
-              Claim Certificate
-            </button>
+            {isEligible ? (
+              <button
+                onClick={claimCertificate}
+                className="flex-1 text-center bg-brand-green/10 text-brand-green px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-green/20 transition"
+              >
+                Claim Certificate
+              </button>
+            ) : (
+              <p className="flex-1 text-center text-xs text-white/30 font-mono self-center">
+                complete all lessons{course.requires_capstone ? ' + capstone' : ''} to unlock certificate
+              </p>
+            )}
           </div>
         )}
 
