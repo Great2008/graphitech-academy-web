@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { api } from '../lib/api'
 import { useAuth } from '../lib/AuthContext'
@@ -65,6 +65,16 @@ export default function CourseDetail() {
     }
   }
 
+  async function claimCertificate() {
+    setActionMsg('')
+    try {
+      await api.post(`/api/certificates/claim/${course.id}`)
+      setActionMsg('Certificate claimed! Check "My Certificates" in the menu.')
+    } catch (err) {
+      setActionMsg(err.message)
+    }
+  }
+
   if (loading) return <p className="text-center mt-20 text-white/40 font-mono text-sm">loading…</p>
   if (error) return <p className="text-center mt-20 text-brand-red font-mono text-sm">{error}</p>
   if (!course) return null
@@ -82,6 +92,26 @@ export default function CourseDetail() {
             Enroll — Free
           </PrimaryButton>
         )}
+
+        {enrolled && (
+          <div className="flex gap-2 mb-4">
+            {course.requires_capstone && (
+              <Link
+                to={`/courses/${course.id}/capstone`}
+                className="flex-1 text-center border border-white/10 text-white/80 px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white/5 transition"
+              >
+                Submit Capstone
+              </Link>
+            )}
+            <button
+              onClick={claimCertificate}
+              className="flex-1 text-center bg-brand-green/10 text-brand-green px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-green/20 transition"
+            >
+              Claim Certificate
+            </button>
+          </div>
+        )}
+
         {actionMsg && <p className="text-sm text-brand-sky font-mono mb-4">{actionMsg}</p>}
 
         <div className="flex gap-2 overflow-x-auto pb-2 mb-4">

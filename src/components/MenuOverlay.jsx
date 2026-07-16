@@ -58,6 +58,11 @@ export function MenuOverlay({ isOpen, onClose }) {
             <MenuLink to="/playground" onClick={onClose} accent="text-brand-green">
               📁 playground/
             </MenuLink>
+            {isAuthenticated && (
+              <MenuLink to="/certificates" onClick={onClose} accent="text-brand-purple">
+                📁 certificates/
+              </MenuLink>
+            )}
           </div>
 
           {isStaff && (
@@ -65,6 +70,9 @@ export function MenuOverlay({ isOpen, onClose }) {
               <p className="text-xs font-mono text-white/30 mb-2">// staff</p>
               <MenuLink to="/admin" onClick={onClose} accent="text-brand-sky">
                 📁 admin/
+              </MenuLink>
+              <MenuLink to="/admin/capstones" onClick={onClose} accent="text-brand-sky">
+                📁 admin/capstones/
               </MenuLink>
             </div>
           )}
