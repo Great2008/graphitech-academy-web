@@ -46,8 +46,7 @@ function Home() {
           <span className="text-brand-purple">Certificates that verify.</span>
         </h1>
         <p className="text-white/60 mb-8 leading-relaxed">
-          Learn web development, Python, and AI productivity — free. Pay
-          only when you've earned a certificate.
+          Learn web development, Python, and AI productivity — free. You only pay for your certificate.
         </p>
         <div className="flex flex-col gap-3">
           <Link

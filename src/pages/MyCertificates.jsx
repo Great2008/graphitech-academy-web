@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { api } from '../lib/api'
+import { api, API_URL } from '../lib/api'
 import { EditorWindow } from '../components/EditorWindow'
 
 export default function MyCertificates() {
@@ -47,16 +47,14 @@ export default function MyCertificates() {
                 {cert.grade_percent && ` · grade: ${cert.grade_percent}%`}
               </p>
               <div className="flex gap-3">
-                {cert.pdf_url && (
-                  <a
-                    href={cert.pdf_url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm text-brand-sky font-mono"
-                  >
-                    download pdf ↗
-                  </a>
-                )}
+                <a
+                  href={`${API_URL}/api/certificates/${cert.certificate_number}/download`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm text-brand-sky font-mono"
+                >
+                  download pdf ↗
+                </a>
                 <Link
                   to={`/verify/${cert.certificate_number}`}
                   className="text-sm text-brand-purple font-mono"

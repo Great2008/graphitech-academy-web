@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { api } from '../lib/api'
+import { api, API_URL } from '../lib/api'
 import { EditorWindow } from '../components/EditorWindow'
 
 export default function VerifyCertificate() {
@@ -73,9 +73,20 @@ export default function VerifyCertificate() {
             <p className="text-xs text-white/40 font-mono mb-1">issued</p>
             <p className="text-white/80 mb-6">{cert.issued_at?.slice(0, 10) || '—'}</p>
 
-            <p className="font-mono text-xs text-white/30">
+            <p className="font-mono text-xs text-white/30 mb-6">
               certificate no. {cert.certificate_number}
             </p>
+
+            {cert.status === 'valid' && (
+              <a
+                href={`${API_URL}/api/certificates/${cert.certificate_number}/download`}
+                target="_blank"
+                rel="noreferrer"
+                className="block text-center bg-brand-purple text-white px-6 py-3 rounded-full font-semibold shadow-lg shadow-brand-purple/20 hover:opacity-90 transition"
+              >
+                Download PDF
+              </a>
+            )}
           </>
         )}
       </EditorWindow>
