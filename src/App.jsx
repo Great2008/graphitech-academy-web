@@ -26,9 +26,9 @@ import AdminAIDraft from './pages/admin/AdminAIDraft'
 function TopBar() {
   return (
     <nav className="border-b border-white/5 bg-ink/95 backdrop-blur sticky top-0 z-10">
-      <div className="px-6 py-4 max-w-2xl mx-auto">
-        <Link to="/" className="font-display text-sm font-bold text-white tracking-tight">
-          GraphiTech<span className="text-brand-purple">Academy</span>
+      <div className="px-6 py-3 max-w-2xl mx-auto">
+        <Link to="/" className="inline-block">
+          <img src="/logo-lockup.png" alt="GraphiTech Academy" className="h-7 w-auto" />
         </Link>
       </div>
     </nav>
@@ -39,14 +39,16 @@ function Home() {
   return (
     <div className="min-h-[calc(100vh-73px-42px)] flex items-center justify-center px-6 py-12">
       <EditorWindow label="academy.sh" className="w-full max-w-md">
-        <p className="font-mono text-xs text-brand-green mb-6">$ whoami</p>
-        <h1 className="font-display font-extrabold text-3xl leading-tight text-white mb-4">
+        <img src="/logo-icon.png" alt="" className="h-12 w-auto mx-auto mb-4" />
+        <p className="font-mono text-xs text-brand-green mb-6 text-center">$ whoami</p>
+        <h1 className="font-display font-extrabold text-3xl leading-tight text-white mb-4 text-center">
           Free coding courses.
           <br />
           <span className="text-brand-purple">Certificates that verify.</span>
         </h1>
-        <p className="text-white/60 mb-8 leading-relaxed">
-          Learn web development, Python, and AI productivity — free. You only pay for your certificate.
+        <p className="text-white/60 mb-8 leading-relaxed text-center">
+          Learn web development, Python, and AI productivity — free. Pay
+          only when you've earned a certificate.
         </p>
         <div className="flex flex-col gap-3">
           <Link
