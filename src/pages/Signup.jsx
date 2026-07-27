@@ -28,11 +28,12 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-73px)] flex items-center justify-center px-6 py-12">
+    <div className="min-h-[calc(100vh-73px-42px)] flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm">
         <EditorWindow label="signup.sh">
-          <p className="font-mono text-xs text-brand-green mb-4">$ ./create-account</p>
-          <h1 className="font-display font-bold text-xl text-white mb-6">
+          <img src="/logo-icon.png" alt="" className="h-10 w-auto mx-auto mb-4" />
+          <p className="font-mono text-xs text-brand-green mb-4 text-center">$ ./create-account</p>
+          <h1 className="font-display font-bold text-xl text-white mb-6 text-center">
             Start learning for free
           </h1>
 
