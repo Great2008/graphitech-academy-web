@@ -22,13 +22,17 @@ import AdminCourses from './pages/admin/AdminCourses'
 import AdminCourseDetail from './pages/admin/AdminCourseDetail'
 import AdminCapstones from './pages/admin/AdminCapstones'
 import AdminAIDraft from './pages/admin/AdminAIDraft'
+import AdminUsers from './pages/admin/AdminUsers'
+import AdminCertificates from './pages/admin/AdminCertificates'
+import AdminPayments from './pages/admin/AdminPayments'
+import AdminLearningPaths from './pages/admin/AdminLearningPaths'
 
 function TopBar() {
   return (
     <nav className="border-b border-white/5 bg-ink/95 backdrop-blur sticky top-0 z-10">
       <div className="px-6 py-3 max-w-2xl mx-auto">
         <Link to="/" className="inline-block">
-          <img src="/logo-lockup.png" alt="GraphiTech Academy" className="h-7 w-auto" />
+          <img src="/logo-lockup.png" alt="GraphiTech Foundation" className="h-7 w-auto" />
         </Link>
       </div>
     </nav>
@@ -99,6 +103,10 @@ function AppShell() {
           <Route path="/admin/courses/:id" element={<AdminCourseDetail />} />
           <Route path="/admin/capstones" element={<AdminCapstones />} />
           <Route path="/admin/ai-draft" element={<AdminAIDraft />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/certificates" element={<AdminCertificates />} />
+          <Route path="/admin/payments" element={<AdminPayments />} />
+          <Route path="/admin/learning-paths" element={<AdminLearningPaths />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

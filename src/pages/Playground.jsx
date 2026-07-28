@@ -4,14 +4,14 @@ import { useAuth } from '../lib/AuthContext'
 import { EditorWindow } from '../components/EditorWindow'
 
 const LANGUAGES = [
-  { key: 'python', label: 'Python', ext: 'py', starter: 'print("Hello, GraphiTech Academy!")' },
-  { key: 'javascript', label: 'JavaScript', ext: 'js', starter: 'console.log("Hello, GraphiTech Academy!")' },
+  { key: 'python', label: 'Python', ext: 'py', starter: 'print("Hello, GraphiTech Foundation!")' },
+  { key: 'javascript', label: 'JavaScript', ext: 'js', starter: 'console.log("Hello, GraphiTech Foundation!")' },
   { key: 'typescript', label: 'TypeScript', ext: 'ts', starter: 'const msg: string = "Hello!";\nconsole.log(msg);' },
   { key: 'java', label: 'Java', ext: 'java', starter: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello!");\n  }\n}' },
   { key: 'c', label: 'C', ext: 'c', starter: '#include <stdio.h>\n\nint main() {\n  printf("Hello!\\n");\n  return 0;\n}' },
   { key: 'cpp', label: 'C++', ext: 'cpp', starter: '#include <iostream>\n\nint main() {\n  std::cout << "Hello!" << std::endl;\n  return 0;\n}' },
   { key: 'go', label: 'Go', ext: 'go', starter: 'package main\n\nimport "fmt"\n\nfunc main() {\n  fmt.Println("Hello!")\n}' },
-  { key: 'ruby', label: 'Ruby', ext: 'rb', starter: 'puts "Hello, GraphiTech Academy!"' },
+  { key: 'ruby', label: 'Ruby', ext: 'rb', starter: 'puts "Hello, GraphiTech Foundation!"' },
   { key: 'php', label: 'PHP', ext: 'php', starter: '<?php\necho "Hello!";' },
 ]
 
