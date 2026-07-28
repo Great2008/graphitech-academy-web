@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import { FormInput, PrimaryButton, ErrorMessage } from '../../components/FormControls'
 
 export default function AdminAIDraft() {
   const navigate = useNavigate()
+  const [paths, setPaths] = useState([])
   const [form, setForm] = useState({
     topic: '',
+    learning_path_id: '',
     target_lesson_count: 6,
     audience_level: 'beginner',
     include_quizzes: true,
@@ -15,12 +17,17 @@ export default function AdminAIDraft() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    api.get('/api/admin/learning-paths').then(setPaths).catch(() => {})
+  }, [])
+
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
     setLoading(true)
     try {
-      const course = await api.post('/api/courses/ai-draft', form)
+      const payload = { ...form, learning_path_id: form.learning_path_id || null }
+      const course = await api.post('/api/courses/ai-draft', payload)
       navigate(`/admin/courses/${course.id}`)
     } catch (err) {
       setError(err.message)
@@ -30,7 +37,7 @@ export default function AdminAIDraft() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-73px)] px-6 py-8">
+    <div className="min-h-[calc(100vh-73px-42px)] px-6 py-8">
       <div className="max-w-md mx-auto">
         <p className="font-mono text-xs text-brand-amber mb-1">$ groq/draft-course</p>
         <h1 className="font-display font-bold text-xl text-white mb-1">AI Course Draft</h1>
@@ -48,6 +55,19 @@ export default function AdminAIDraft() {
             onChange={(e) => setForm({ ...form, topic: e.target.value })}
             placeholder="e.g. Python basics for beginners"
           />
+          <label className="block text-left mb-4">
+            <span className="text-sm font-medium text-white/70">Category</span>
+            <select
+              value={form.learning_path_id}
+              onChange={(e) => setForm({ ...form, learning_path_id: e.target.value })}
+              className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink px-4 py-3 text-white"
+            >
+              <option value="">No category</option>
+              {paths.map((p) => (
+                <option key={p.id} value={p.id}>{p.title}</option>
+              ))}
+            </select>
+          </label>
           <FormInput
             label="Number of lessons"
             type="number"

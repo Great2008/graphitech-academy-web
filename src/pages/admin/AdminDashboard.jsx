@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   }, [])
 
   return (
-    <div className="min-h-[calc(100vh-73px)] px-6 py-8">
+    <div className="min-h-[calc(100vh-73px-42px)] px-6 py-8">
       <div className="max-w-md mx-auto">
         <p className="font-mono text-xs text-brand-sky mb-1">$ admin/dashboard</p>
         <h1 className="font-display font-bold text-xl text-white mb-6">Overview</h1>
@@ -58,6 +58,34 @@ export default function AdminDashboard() {
               >
                 <p className="text-white font-semibold">Courses</p>
                 <p className="text-xs text-white/40 font-mono mt-0.5">manage &amp; publish</p>
+              </Link>
+              <Link
+                to="/admin/learning-paths"
+                className="block bg-surface border border-white/5 rounded-xl p-4 hover:border-brand-purple/40 transition"
+              >
+                <p className="text-white font-semibold">Categories</p>
+                <p className="text-xs text-white/40 font-mono mt-0.5">learning paths</p>
+              </Link>
+              <Link
+                to="/admin/certificates"
+                className="block bg-surface border border-white/5 rounded-xl p-4 hover:border-brand-purple/40 transition"
+              >
+                <p className="text-white font-semibold">Certificates</p>
+                <p className="text-xs text-white/40 font-mono mt-0.5">view all &amp; revoke</p>
+              </Link>
+              <Link
+                to="/admin/payments"
+                className="block bg-surface border border-white/5 rounded-xl p-4 hover:border-brand-purple/40 transition"
+              >
+                <p className="text-white font-semibold">Payments</p>
+                <p className="text-xs text-white/40 font-mono mt-0.5">transaction history</p>
+              </Link>
+              <Link
+                to="/admin/users"
+                className="block bg-surface border border-white/5 rounded-xl p-4 hover:border-brand-purple/40 transition"
+              >
+                <p className="text-white font-semibold">Users</p>
+                <p className="text-xs text-white/40 font-mono mt-0.5">manage roles</p>
               </Link>
             </div>
           </>
