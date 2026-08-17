@@ -7,6 +7,7 @@ import { DragHintBanner } from './components/DragHintBanner'
 import { useDragDownToOpen } from './hooks/useDragDownToOpen'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Profile from './pages/Profile'
 import CourseList from './pages/CourseList'
 import CourseDetail from './pages/CourseDetail'
 import Tutor from './pages/Tutor'
@@ -42,7 +43,7 @@ function TopBar() {
 function Home() {
   return (
     <div className="min-h-[calc(100vh-73px-42px)] flex items-center justify-center px-6 py-12">
-      <EditorWindow label="academy.sh" className="w-full max-w-md">
+      <EditorWindow label="foundation.sh" className="w-full max-w-md">
         <img src="/logo-icon.png" alt="" className="h-12 w-auto mx-auto mb-4" />
         <p className="font-mono text-xs text-brand-green mb-6 text-center">$ whoami</p>
         <h1 className="font-display font-extrabold text-3xl leading-tight text-white mb-4 text-center">
@@ -89,6 +90,7 @@ function AppShell() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route path="/tutor" element={<Tutor />} />

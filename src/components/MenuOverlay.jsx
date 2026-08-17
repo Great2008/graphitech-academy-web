@@ -80,12 +80,17 @@ export function MenuOverlay({ isOpen, onClose }) {
           <div>
             <p className="text-xs font-mono text-white/30 mb-2">// account</p>
             {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="font-mono text-sm text-white/50 hover:text-brand-red transition py-3"
-              >
-                logout
-              </button>
+              <>
+                <MenuLink to="/profile" onClick={onClose} accent="text-brand-sky">
+                  profile.sh
+                </MenuLink>
+                <button
+                  onClick={handleLogout}
+                  className="font-mono text-sm text-white/50 hover:text-brand-red transition py-3"
+                >
+                  logout
+                </button>
+              </>
             ) : (
               <>
                 <MenuLink to="/login" onClick={onClose}>
