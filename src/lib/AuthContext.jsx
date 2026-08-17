@@ -39,8 +39,15 @@ export function AuthProvider({ children }) {
     setUser(null)
   }, [])
 
+  const refreshUser = useCallback(async () => {
+    const freshUser = await api.get('/api/auth/me')
+    localStorage.setItem('gta_user', JSON.stringify(freshUser))
+    setUser(freshUser)
+    return freshUser
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, refreshUser, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   )
