@@ -19,7 +19,24 @@ export default function VerifyCertificate() {
 
   return (
     <div className="min-h-[calc(100vh-73px-42px)] flex items-center justify-center px-6 py-12">
-      <EditorWindow label="verify.sh" className="w-full max-w-md">
+      <div className="relative w-full max-w-md">
+        {cert && cert.status !== 'valid' && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none overflow-hidden rounded-xl">
+            <span
+              className="font-display font-extrabold text-brand-red border-4 border-brand-red px-8 py-2 select-none"
+              style={{
+                transform: 'rotate(-18deg)',
+                fontSize: 'clamp(28px, 8vw, 48px)',
+                letterSpacing: '4px',
+                opacity: 0.85,
+                boxShadow: '0 0 0 4px rgba(248,113,113,0.15)',
+              }}
+            >
+              REVOKED
+            </span>
+          </div>
+        )}
+        <EditorWindow label="verify.sh" className={cert && cert.status !== 'valid' ? 'opacity-60' : ''}>
         <p className="font-mono text-xs text-brand-sky mb-4">
           $ verify {certificateNumber}
         </p>
@@ -90,6 +107,7 @@ export default function VerifyCertificate() {
           </>
         )}
       </EditorWindow>
+      </div>
     </div>
   )
 }
