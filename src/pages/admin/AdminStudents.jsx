@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 
 export default function AdminStudents() {
   const [students, setStudents] = useState([])
@@ -23,7 +24,7 @@ export default function AdminStudents() {
           Students ({students.length})
         </h1>
 
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {error && <p className="text-brand-red font-mono text-sm">{error}</p>}
         {!loading && students.length === 0 && (
           <p className="text-white/40 text-sm">No students have signed up yet.</p>

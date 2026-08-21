@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 
 const STATUS_COLORS = {
   draft: 'bg-brand-amber/10 text-brand-amber',
@@ -37,7 +38,7 @@ export default function AdminCourses() {
           </Link>
         </div>
 
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {error && <p className="text-brand-red font-mono text-sm">{error}</p>}
 
         <div className="space-y-3">

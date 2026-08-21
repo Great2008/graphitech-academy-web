@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 import { ErrorMessage } from '../../components/FormControls'
 
 export default function AdminCapstones() {
@@ -40,7 +41,7 @@ export default function AdminCapstones() {
         </h1>
 
         <ErrorMessage message={error} />
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {!loading && submissions.length === 0 && (
           <p className="text-white/40 text-sm">Nothing waiting on review.</p>
         )}

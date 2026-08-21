@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 import { useAuth } from '../../lib/AuthContext'
 import { ErrorMessage } from '../../components/FormControls'
 
@@ -53,7 +54,7 @@ export default function AdminUsers() {
         </h1>
 
         <ErrorMessage message={error} />
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
 
         <div className="space-y-2">
           {users.map((u) => (

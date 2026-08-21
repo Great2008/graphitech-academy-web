@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 import { PrimaryButton, FormInput, ErrorMessage } from '../../components/FormControls'
 
 export default function AdminCourseDetail() {
@@ -72,7 +73,7 @@ export default function AdminCourseDetail() {
     }
   }
 
-  if (loading) return <p className="text-center mt-20 text-white/40 font-mono text-sm">loading…</p>
+  if (loading) return <Loader />
   if (!course) return <p className="text-center mt-20 text-brand-red font-mono text-sm">{error}</p>
 
   const isDraft = course.status === 'draft'

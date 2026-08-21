@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 
 const STATUS_COLORS = {
   active: 'text-brand-sky',
@@ -18,7 +19,7 @@ export default function AdminStudentDetail() {
   }, [id])
 
   if (error) return <p className="text-center mt-20 text-brand-red font-mono text-sm">{error}</p>
-  if (!student) return <p className="text-center mt-20 text-white/40 font-mono text-sm">loading…</p>
+  if (!student) return <Loader />
 
   return (
     <div className="min-h-[calc(100vh-73px)] px-6 py-8">

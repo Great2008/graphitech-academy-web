@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../lib/api'
+import { Loader } from '../../components/Loader'
 import { ErrorMessage } from '../../components/FormControls'
 
 export default function AdminCertificates() {
@@ -40,7 +41,7 @@ export default function AdminCertificates() {
         </h1>
 
         <ErrorMessage message={error} />
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {!loading && certificates.length === 0 && (
           <p className="text-white/40 text-sm">No certificates issued yet.</p>
         )}
