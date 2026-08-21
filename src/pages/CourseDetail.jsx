@@ -5,6 +5,7 @@ import { api } from '../lib/api'
 import { useAuth } from '../lib/AuthContext'
 import { EditorWindow } from '../components/EditorWindow'
 import { PrimaryButton } from '../components/FormControls'
+import { Loader } from '../components/Loader'
 
 const PING_INTERVAL_SECONDS = 15
 
@@ -157,7 +158,7 @@ export default function CourseDetail() {
     }
   }
 
-  if (loading) return <p className="text-center mt-20 text-white/40 font-mono text-sm">loading…</p>
+  if (loading) return <Loader />
   if (error) return <p className="text-center mt-20 text-brand-red font-mono text-sm">{error}</p>
   if (!course) return null
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
+import { Loader } from '../components/Loader'
 
 export default function CourseList() {
   const [courses, setCourses] = useState([])
@@ -23,7 +24,7 @@ export default function CourseList() {
           Courses
         </h1>
 
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {error && <p className="text-brand-red font-mono text-sm">{error}</p>}
         {!loading && !error && courses.length === 0 && (
           <div className="border border-dashed border-white/10 rounded-xl p-8 text-center">

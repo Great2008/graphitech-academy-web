@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, API_URL } from '../lib/api'
+import { Loader } from '../components/Loader'
 import { EditorWindow } from '../components/EditorWindow'
 
 export default function MyCertificates() {
@@ -22,7 +23,7 @@ export default function MyCertificates() {
         <p className="font-mono text-xs text-brand-green mb-1">$ ls certificates/</p>
         <h1 className="font-display font-bold text-xl text-white mb-6">My Certificates</h1>
 
-        {loading && <p className="text-white/40 font-mono text-sm">loading…</p>}
+        {loading && <Loader />}
         {error && <p className="text-brand-red font-mono text-sm">{error}</p>}
         {!loading && certificates.length === 0 && (
           <div className="border border-dashed border-white/10 rounded-xl p-8 text-center">
